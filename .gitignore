@@ -1,0 +1,30 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+tfplan
+crash.log
+*.tfvars
+!example.tfvars
+*.tfvars.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kubeconfig
+kubeconfig
+~/.kube/config
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
