@@ -2,7 +2,7 @@
 
 Production-ready Infrastructure as Code with Kubernetes, Terraform, Docker, and comprehensive CI/CD pipelines for multi-cloud deployments.
 
-## 🎯 Overview
+## 🌍 Overview
 
 This repository contains enterprise-grade DevOps infrastructure templates and practices for:
 - **Kubernetes orchestration** (EKS, AKS, GKE)
@@ -13,10 +13,10 @@ This repository contains enterprise-grade DevOps infrastructure templates and pr
 - **Security best practices** (RBAC, secrets management)
 - **Container registry** (ECR, ACR, GCR)
 
-## 🛠 Tech Stack
+## 🏗️ Tech Stack
 
 | Component | Technology |
-|-----------|------------|
+|-----------|-------------|
 | **Container Orchestration** | Kubernetes 1.28+ |
 | **Infrastructure as Code** | Terraform 1.6+ |
 | **Container Runtime** | Docker 24+ |
@@ -32,57 +32,58 @@ This repository contains enterprise-grade DevOps infrastructure templates and pr
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 cloud-native-devops-stack/
-├── terraform/
-│   ├── aws/                    # AWS infrastructure
-│   │   ├── eks/               # EKS cluster
-│   │   ├── rds/               # RDS databases
-│   │   ├── vpc/               # Networking
+├── terraform/                    # Infrastructure as Code
+│   ├── aws/                      # AWS infrastructure
+│   │   ├── eks/                  # EKS cluster
+│   │   ├── rds/                  # RDS databases
+│   │   ├── vpc/                  # Networking
 │   │   └── main.tf
-│   ├── azure/                 # Azure infrastructure
-│   │   ├── aks/              # AKS cluster
+│   ├── azure/                    # Azure infrastructure
+│   │   ├── aks/                  # AKS cluster
 │   │   └── main.tf
-│   ├── gcp/                   # GCP infrastructure
-│   │   ├── gke/              # GKE cluster
+│   ├── gcp/                      # GCP infrastructure
+│   │   ├── gke/                  # GKE cluster
 │   │   └── main.tf
-│   ├── modules/               # Reusable modules
+│   ├── modules/                  # Reusable modules
 │   └── variables.tf
-├── kubernetes/
-│   ├── manifests/             # K8s YAML files
+├── kubernetes/                   # K8s manifests
+│   ├── manifests/                # K8s YAML files
 │   │   ├── deployments/
 │   │   ├── services/
 │   │   ├── ingress/
 │   │   ├── configmaps/
 │   │   └── secrets/
-│   ├── helm/                  # Helm charts
+│   ├── helm/                     # Helm charts
 │   │   ├── app-chart/
 │   │   └── infrastructure/
-│   └── kustomize/             # Kustomization overlays
-├── docker/
-│   ├── Dockerfile             # Multi-stage builds
+│   └── kustomize/                # Kustomization overlays
+├── docker/                       # Container images
+│   ├── Dockerfile                # Multi-stage builds
 │   └── docker-compose.yml
-├── scripts/
-│   ├── deploy.sh              # Deployment scripts
-│   ├── setup-cluster.sh       # Cluster setup
+├── scripts/                      # Deployment scripts
+│   ├── deploy.sh                 # Deployment scripts
+│   ├── setup-cluster.sh          # Cluster setup
 │   └── health-check.sh
-├── monitoring/
+├── monitoring/                   # Observability
 │   ├── prometheus/
 │   │   └── prometheus.yml
 │   ├── grafana/
 │   │   └── dashboards/
 │   └── loki/
 │       └── loki-config.yml
-├── .github/
-│   └── workflows/             # GitHub Actions
+├── .github/                      # GitHub Actions
+│   └── workflows/                # CI/CD pipelines
 │       ├── ci.yml
 │       ├── deploy.yml
 │       └── terraform.yml
-└── docs/
-    ├── ARCHITECTURE.md
-    ├── SETUP_GUIDE.md
-    └── DEPLOYMENT.md
-\`\`\`
+├── docs/                         # Documentation
+│   ├── ARCHITECTURE.md
+│   ├── SETUP_GUIDE.md
+│   └── DEPLOYMENT.md
+└── LICENSE
+```
 
 ## 🚀 Quick Start
 
@@ -95,7 +96,7 @@ cloud-native-devops-stack/
 
 ### AWS EKS Setup
 
-\`\`\`bash
+```bash
 cd terraform/aws
 terraform init
 terraform plan
@@ -108,11 +109,11 @@ aws eks update-kubeconfig \
 
 # Verify cluster
 kubectl get nodes
-\`\`\`
+```
 
 ### Deploy Application
 
-\`\`\`bash
+```bash
 cd kubernetes/helm
 helm install my-app ./app-chart \
   -f values-prod.yaml \
@@ -121,9 +122,9 @@ helm install my-app ./app-chart \
 # Check deployment
 kubectl get deployments -n production
 kubectl logs -f deployment/my-app -n production
-\`\`\`
+```
 
-## 🔧 Key Features
+## ⚡ Key Features
 
 ### Infrastructure as Code
 - ✅ **Modular Terraform**: Reusable modules for VPC, EKS, RDS, etc.
@@ -159,51 +160,42 @@ kubectl logs -f deployment/my-app -n production
 - ✅ **Image Scanning**: Trivy for vulnerabilities
 - ✅ **Compliance**: CIS benchmarks, PCI-DSS ready
 
-## 📊 Architecture
+## 🏗️ Architecture
 
-\`\`\`
-┌─────────────────────────────────────────┐
-│         CI/CD Pipeline                  │
-│  (GitHub Actions / GitLab CI)           │
-└──────────────────┬──────────────────────┘
-                   │
-        ┌──────────┴──────────┐
-        │                     │
-   ┌────▼────┐         ┌─────▼──────┐
-   │ Build   │         │   Test     │
-   │ Image   │         │  & Scan    │
-   └────┬────┘         └─────┬──────┘
-        │                     │
-        └──────────┬──────────┘
-                   │
-        ┌──────────▼──────────┐
-        │ Push to Registry    │
-        │ (ECR/ACR/GCR)       │
-        └──────────┬──────────┘
-                   │
-        ┌──────────▼──────────────────┐
-        │   Kubernetes Cluster         │
-        │  (EKS/AKS/GKE)              │
-        │  ┌──────────────────────┐   │
-        │  │  Ingress Controller  │   │
-        │  └──────────┬───────────┘   │
-        │             │               │
-        │  ┌──────────▼───────────┐   │
-        │  │  Services & Pods     │   │
-        │  └──────────┬───────────┘   │
-        │             │               │
-        │  ┌──────────▼───────────┐   │
-        │  │  Volumes & Storage   │   │
-        │  └──────────────────────┘   │
-        └─────────────────────────────┘
-                   │
-        ┌──────────▼──────────┐
-        │  Monitoring Stack   │
-        │ (Prometheus/Grafana)│
-        └─────────────────────┘
-\`\`\`
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CI/CD Pipeline                                      │
+│                 (GitHub Actions / GitLab CI)                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│   Build       Test       Scan           Push to Registry    GitOps Deploy   │
+│   Image       &          Security       (ECR/ACR/GCR)       (ArgoCD)        │
+│              Lint        Check                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                     ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      Kubernetes Cluster                                      │
+│                  (EKS/AKS/GKE)                                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│   Ingress Controller    Services & Pods         Volumes & Storage           │
+│   (NGINX)              (Deployments)            (PV/PVC)                     │
+│                                                                               │
+│   Network Policies      RBAC                    Resource Quotas              │
+│   Pod Security          Secrets & ConfigMaps    Auto-scaling                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                     ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     Monitoring Stack                                         │
+│                 (Prometheus/Grafana)                                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│   Metrics Collection    Dashboards    Logging          Tracing              │
+│   (Prometheus)          (Grafana)     (Loki/ELK)       (Jaeger)             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
-## 📚 Documentation
+## 📖 Documentation
 
 - [Architecture Overview](./docs/ARCHITECTURE.md)
 - [Setup Guide](./docs/SETUP_GUIDE.md)
@@ -211,14 +203,14 @@ kubectl logs -f deployment/my-app -n production
 - [Security Best Practices](./docs/SECURITY.md)
 - [Troubleshooting](./docs/TROUBLESHOOTING.md)
 
-## 🎓 Learning Resources
+## 🔗 Learning Resources
 
 - Terraform Documentation: https://www.terraform.io/docs
 - Kubernetes Documentation: https://kubernetes.io/docs
 - Docker Best Practices: https://docs.docker.com/develop/dev-best-practices/
 - AWS Well-Architected: https://aws.amazon.com/architecture/well-architected/
 
-## 🔐 Security
+## 🔒 Security
 
 - All infrastructure encrypted at rest
 - RBAC with least privilege access
@@ -229,7 +221,7 @@ kubectl logs -f deployment/my-app -n production
 
 ## 🧪 Testing
 
-\`\`\`bash
+```bash
 # Terraform validation
 terraform validate
 terraform plan -out=tfplan
@@ -242,7 +234,7 @@ kubeval kubernetes/manifests/**/*.yaml
 
 # Docker image scanning
 trivy image my-image:latest
-\`\`\`
+```
 
 ## 📊 Monitoring & Observability
 
@@ -254,9 +246,9 @@ Metrics, logs, and traces collected from:
 
 Access Grafana dashboards at: http://grafana.yourdomain.com
 
-## 🚀 Production Deployment
+## 🔄 Production Deployment
 
-\`\`\`bash
+```bash
 # 1. Validate infrastructure
 terraform validate
 terraform plan -out=tfplan
@@ -266,14 +258,14 @@ terraform apply tfplan
 
 # 3. Deploy application
 helm upgrade --install my-app ./helm/app-chart \
-  -f values-production.yaml \
+  -f helm/app-chart/values-production.yaml \
   --namespace production \
   --create-namespace
 
 # 4. Verify deployment
 kubectl rollout status deployment/my-app -n production
 kubectl get pods -n production
-\`\`\`
+```
 
 ## 🤝 Contributing
 
@@ -282,11 +274,11 @@ kubectl get pods -n production
 3. Make changes and test
 4. Submit a pull request
 
-## 📄 License
+## 📜 License
 
 Apache License 2.0 - see LICENSE file
 
-## 👨‍💻 Author
+## 🙋 Author
 
 [Your Name] - Senior DevOps / Platform Engineer
 
